@@ -7,4 +7,6 @@ from tkinter import ttk
 # W2RO7B9H5RESE4N1
 
 if __name__ == "__main__":
-    pass
+    window = tk.Tk()
+    window.title("StockTracker")
+    window.mainloop()

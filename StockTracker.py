@@ -1,13 +1,12 @@
 import requests
 import csv
-#
+import pandas_datareader as pdr
+
 # Implementation for data collection of the StockTrader project. StockTracker data structure is a wrapper around the
 # dictionary, with extra functions to update a stock ticker and refresh all stock data at once.
-#
+# No longer in use - project pivot. Needs to be removed when more project bones in other areas are complete.
 
-
-def get_apikey_from_text(filename):
-    pass
+def get_active_stocks():
 
 
 def get_active_stocks(apikey):
