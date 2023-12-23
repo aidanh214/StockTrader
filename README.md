@@ -4,6 +4,6 @@ Desktop application with GUI
 Spending tracking
 Budget tracking
 Investment tracking
-Data visualisation for expenditure
+Data visualisation
 
 Very WIP at the moment. Check back later for more. 
