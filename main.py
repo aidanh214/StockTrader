@@ -5,28 +5,29 @@ import sqlite3
 
 
 class SpendingData:
+    # Container class for a transactions ledger, saves and loads from a SQL database file.
     def __init__(self):
         self.transactions = {}
 
-    def add_transaction(self, trans_date, value, note):
+    def add_transaction(self, trans_date, value, note): # Add a spend to the ledger
         if (trans_date, note) in self.transactions:
             self.transactions[trans_date, note][2] += value
         else:
             self.transactions[trans_date, note] = [trans_date, note, value]
 
-    def remove_transaction(self, trans_date, note):
+    def remove_transaction(self, trans_date, note): # Remove a spend from the ledger
         if (trans_date, note) in self.transactions:
             del self.transactions[trans_date, note]
         else:
             raise ValueError("No transaction to delete.")
 
-    def modify_transaction(self, date, note, new_value):
+    def modify_transaction(self, date, note, new_value): # Modify a spend (may not be useful - will see)
         if (date, note) in self.transactions:
             self.transactions[date, note] = [date, note, new_value]
         else:
             raise ValueError("No transaction to modify.")
 
-    def save_data(self, filename):
+    def save_data(self, filename): # save to the database given at filename. Robust to non-existence
         spend_string = ""
         for spend in self.transactions:
             spend_list = self.transactions[spend]
@@ -43,7 +44,7 @@ class SpendingData:
             cur.execute("""INSERT INTO spending (date, note, value) VALUES """ + spend_string)
         con.commit()
 
-    def load_data(self, filename):
+    def load_data(self, filename): # load from database at filename. Need to add error catching for database non-existence.
         con = sqlite3.connect(filename)
         cur = con.cursor()
         spends = cur.execute("SELECT date, note, value FROM spending ORDER BY date")
@@ -58,17 +59,17 @@ class InvestmentData:
     def __init__(self):
         self.portfolio = {}
 
-    def add_asset(self, asset_type, number_of_asset, note=""):
+    def add_asset(self, asset_type, number_of_asset, note=""): # Add an asset to the portfolio
         if (asset_type, note) in self.portfolio:
             self.portfolio[asset_type, note] += number_of_asset
         else:
             self.portfolio[asset_type, note] = number_of_asset
 
-    def get_asset_value(self, asset_type, note=""):
+    def get_asset_value(self, asset_type, note=""): # Get the amount of assets of a particular type in the portfolio
         asset_value = self.portfolio[asset_type, note]
         return asset_value
 
-    def save_data(self, filename):
+    def save_data(self, filename): # Save data to a SQLite database at filename.
         sql_string = ""
         for asset in self.portfolio:
             sql_string += "("
@@ -88,7 +89,7 @@ class InvestmentData:
             cur.execute("""INSERT INTO assets VALUES """ + sql_string)
         con.commit()
 
-    def load_data(self, filename):
+    def load_data(self, filename): # Load data from a SQLite database at filename.
         con = sqlite3.connect(filename)
         cur = con.cursor()
         assets = cur.execute("SELECT type, note, amount FROM assets ORDER BY type")
