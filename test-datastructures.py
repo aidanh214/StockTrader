@@ -3,7 +3,11 @@ import unittest
 import tempfile
 import sqlite3
 import os
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
+# Testing framework for the datastructure implementations in main.py
+# I used ChatGPT to generate most of this.
+# Life is too short for writing hundreds of lines of unit tests.
 
 
 class TestSpendingData(unittest.TestCase):
